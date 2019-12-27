@@ -6,15 +6,14 @@ import md5 from 'md5'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 //缓存api数据
 const cached = LRU({
-        max: 1000,
-        maxAge: 1000 * 60 *15
-    })
+	max: 1000,
+	maxAge: 1000 * 60 *15
+})
 function ajax(type,url,options){
 	return new Promise((resolve,reject) => {
 		axios({
 			method: type,
 			url: url,
-			// baseURL: "https://www.mapblog.cn",
 			baseURL: "http://localhost:6180",
       params: type === 'get' ? options : null,
       data: type !== 'get' ? qs.stringify(options) : null
@@ -31,12 +30,14 @@ function ajax(type,url,options){
 }
 const config = {
 	get(url,options){
+		// 先读缓存
 		let key = md5(url + JSON.stringify(options))
-        if (cached && cached.has(key)) {
-            return Promise.resolve(cached.get(key))
-        }
-        return new Promise((resolve,reject) =>{
+		if (cached && cached.has(key)) {
+			return Promise.resolve(cached.get(key))
+		}
+    return new Promise((resolve,reject) =>{
 			ajax("get",url,options).then((data) =>{
+				// 存缓存
 				if(cached && options.cache){
 					cached.set(key,data)
 				}
@@ -75,4 +76,3 @@ const config = {
 }
 
 export default config
-

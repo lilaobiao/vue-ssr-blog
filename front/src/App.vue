@@ -1,7 +1,7 @@
 <template>
     <div id = "app">
         <div class = "main">
-            <div id = "anchor"></div>   
+            <div id = "anchor"></div>
             <div class = "body-content">
                 <tab></tab>
                 <div class = "container" ref = "container">
@@ -10,7 +10,7 @@
                             <div class = "location" v-show = "$route.name !== 'home'">
                                 <span>当前位置：</span>
                                 <a href = "javascript: void(0)" @click = "backHome">首页</a>
-                                <div v-for = "item in location">
+                                <div v-for = "(item,index) in location" :key="index">
                                 -><a href = "javascript: void(0)" @click = "back(item)"> {{ item.showName }}</a>
                                 </div>
                             </div>
@@ -25,12 +25,12 @@
                                 <hot></hot>
                                 <gateWay></gateWay>
                                 <file-on-place></file-on-place>
-                            </div>  
+                            </div>
                         </div>
                     </section>
                 </div>
             </div>
-        </div>    
+        </div>
         <foot></foot>
         <transition name = "fade">
           <div class = "rocket" v-show = "showBackTop">
@@ -76,7 +76,7 @@
         },
         //当articleShow组件的标题变化时，刷新当前位置的文章标题，防止当前文章显示上一篇文章的标题
         currentTitle(){
-          this.currentLocation(this.$route)  
+          this.currentLocation(this.$route)
         }
       },
       mounted(){
@@ -128,7 +128,7 @@
           let args = arguments
           if(this.timer){
             clearTimeout(this.timer)
-          }   
+          }
           this.timer = setTimeout(function(){
             func.apply(context,args)
           },delay)
@@ -156,31 +156,31 @@
         //当前位置的路由信息表
         currentLocation: function(to){
           switch(to.name){
-            case "article" : 
+            case "article" :
             this.location = [{pathName: "article",showName: "技术文章"}]
             break
-            case "techincal" : 
+            case "techincal" :
             let tag = to.params.articleList
             this.location = [{pathName: "article",showName: "技术文章"},{pathName: "techincal",showName: tag,params: {tag: tag}}]
             break
-            case "articleShow" : 
+            case "articleShow" :
             let _tag = to.params.articleList
             this.location = [{pathName: "article",showName: "技术文章"},{pathName: "techincal",showName: _tag,params: {tag: _tag}},{pathName: "articleShow",showName: this.currentTitle,params: {tag: _tag,id: to.params.id}}]
             break
-            case "life": 
+            case "life":
             this.location = [{pathName: "life",showName: "生活"}]
             break
-            case "lifeShow": 
+            case "lifeShow":
             this.location = [{pathName: "life",showName: "生活"},{pathName: "lifeShow",showName: this.currentTitle,params: {id: to.params.id}}]
             console.log(this.currentTitle)
             break
-            case "msgboard": 
+            case "msgboard":
             this.location = [{pathName: "msgboard",showName: "留言板"}]
             break
-            case "search": 
+            case "search":
             this.location = [{pathName: "search",showName: "搜索"}]
             break
-            case "timeLine": 
+            case "timeLine":
             this.location = [{pathName: "timeLine",showName: "时间轴"}]
           }
         }
