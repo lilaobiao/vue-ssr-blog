@@ -1,4 +1,5 @@
 /ignore/
 node_modules/
 /front/node_modules/
+/front/dist/
 /admin/node_modules/
