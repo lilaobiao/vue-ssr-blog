@@ -1,4 +1,4 @@
-# vue-ssr-blog 
+# vue-ssr-blog
 [博客地址 http://www.mapblog.cn](http://www.mapblog.cn "mapblog小站")
 > 这是一个完整的vue个人博客项目，包括前台页面展示和一个后台管理。<br>
 > 详情请分别进入admin和front目录查看README文件
@@ -44,6 +44,23 @@ npm run dev
 npm run build
 # serve for production
 npm start
+
+"dev": "启动开发环境服务",
+"start": "启动线上环境服务",
+"build": "打包客户端和服务端代码",
+"build:client": "打包客户端代码",
+"build:server": "打包服务端代码"
+
+项目启动方法：
+先对代码打包，生成服务端代码之后，服务才能跑起来，然后才启动其他服务
+
+所以：
+先 npm run build:client 再 npm run dev
+
+先 npm run build:server 再 npm run start
+
+因为服务端代码用到了mongodb服务，所以启动前需要配置自己的用户名，密码和数据库
+在 server/db/db.js 配置
 ```
 ### admin
 ```bash

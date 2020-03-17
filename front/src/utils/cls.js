@@ -13,5 +13,5 @@ export function cls(cls){
 			}
 		}
 		return tempArr[0]
-    }
+  }
 }

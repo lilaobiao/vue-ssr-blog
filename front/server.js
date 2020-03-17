@@ -85,11 +85,12 @@ server.use('/api/ueditor/UE', ueditor(path.join(__dirname, 'static'), function (
 }))
 //前端请求
 server.get(["/","/home","/article","/article/:articleList","/article/:articleList/:id","/life",
-  "/life/:id","/msgBoard","/search/:searchKey","/timeLine/:time","/login_qq"],(req, res) => { 
+  "/life/:id","/msgBoard","/search/:searchKey","/timeLine/:time","/login_qq"],(req, res) => {
     const context = {
         title: 'mapBlog',
         url: req.url
     }
+
     renderer.renderToString(context, (err, html) => {
         const { title,meta } = context.meta.inject()
         if (err) {
@@ -101,10 +102,12 @@ server.get(["/","/home","/article","/article/:articleList","/article/:articleLis
         res.end(html)
     })
 })
+
 //后端请求
 server.get(["/admin","/admin/*","/login"],(req,res) => {
-    res.render("admin.html",{title: "登录"})  
+    res.render("admin.html",{title: "登录"})
 })
+
 server.get('*', function(req, res){
     res.render('404.html', {
         title: 'No Found'
@@ -130,6 +133,7 @@ function probe(port, callback) {
             callback(true, port)
         }
     })
+
     servers.on('error', function(err) {
         clearTimeout(timeoutRef)
         let result = true
@@ -141,6 +145,7 @@ function probe(port, callback) {
         }
     })
 }
+
 const checkPortPromise = new Promise((resolve) => {
     (function serverport(_port = 6180) {
         // let pt = _port || 8080;
@@ -157,6 +162,7 @@ const checkPortPromise = new Promise((resolve) => {
         })
     })()
 })
+
 checkPortPromise.then(data => {
     uri = 'http://localhost:' + data;
     // uri = 'http://127.0.0.1:' + data;
